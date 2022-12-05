@@ -1,10 +1,10 @@
 name: 'Bulk Merge'
 description: 'Merge pull requests that match given criteria'
 inputs:
-  who-to-greet: # id of input
-    description: 'Who to greet'
-    required: true
-    default: 'World'
+  repo-token:
+    description: 'The authentication token to use'
+    required: false
+    default: ${{ secrets.GITHUB_TOKEN }}
 outputs:
   time: # id of output
     description: 'The time we greeted you'
