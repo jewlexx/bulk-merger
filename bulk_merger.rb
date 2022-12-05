@@ -2,7 +2,7 @@ require "octokit"
 
 class BulkMerger
   def self.merge_approved_pull_requests(regexp: Regexp)
-    unmerged_pull_requests = find_pull_requests("review:approved #{query_string}")
+    unmerged_pull_requests = find_pull_requests(regexp)
 
     if unmerged_pull_requests.size == 0
       puts "No unmerged PRs found!"
@@ -37,8 +37,8 @@ class BulkMerger
     end
   end
 
-  def self.search_pull_requests(query)
-    client.search_issues("#{query} archived:false is:pr state:open in:title").items
+  def self.search_pull_requests(query: Regexp)
+    client.search_issues("archived:false is:pr state:open").items
   end
 
   def self.repos
@@ -48,7 +48,7 @@ class BulkMerger
       .map { |repo| repo.full_name }
   end
 
-  def self.find_pull_requests(query)
+  def self.find_pull_requests(query: Regexp)
     search_pull_requests(query).select do |pr|
       repos.any? { |repo| pr.repository_url.include?(repo) }
     end
