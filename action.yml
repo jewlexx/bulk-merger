@@ -5,8 +5,16 @@ inputs:
     description: 'The authentication token to use'
     required: false
     default: ${{ secrets.GITHUB_TOKEN }}
+
+  authors:
+    description: 'The list of authors that should be merged'
+    required: false
+
 runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
     GITHUB_TOKEN: ${{ inputs.repo-token }}
+
+  args:
+    - ${{ inputs.authors }}
