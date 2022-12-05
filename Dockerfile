@@ -2,4 +2,9 @@ FROM ruby:3-alpine
 
 COPY * /
 
-ENTRYPOINT [ "/bulk-merger.sh" ]
+WORKDIR /
+
+# Install Ruby deps
+RUN bundler install
+
+ENTRYPOINT [ "bundle exec rake" ]
