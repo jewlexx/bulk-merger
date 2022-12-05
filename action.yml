@@ -20,6 +20,5 @@ runs:
   image: 'Dockerfile'
   env:
     GITHUB_TOKEN: ${{ inputs.repo-token }}
-
-  args:
-    - ${{ inputs.authors }}
+    AUTHORS: ${{ inputs.authors }}
+    TITLE: ${{ inputs.title }}
