@@ -1,7 +1,7 @@
 require "octokit"
 
 class BulkMerger
-  def self.merge_approved_pull_requests!
+  def self.merge_approved_pull_requests(regexp: Regexp)
     unmerged_pull_requests = find_pull_requests("review:approved #{query_string}")
 
     if unmerged_pull_requests.size == 0
