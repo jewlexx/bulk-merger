@@ -10,6 +10,11 @@ inputs:
     description: 'The list of authors that should be merged'
     required: false
 
+  title:
+    description: 'Regex the title must match'
+    required: false
+    default: '.*'
+
 runs:
   using: 'docker'
   image: 'Dockerfile'
