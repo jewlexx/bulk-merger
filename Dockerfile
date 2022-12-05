@@ -5,6 +5,6 @@ COPY * /
 WORKDIR /
 
 # Install Ruby deps
-RUN bundler install
+RUN bundle install
 
 ENTRYPOINT [ "bundle exec rake" ]
