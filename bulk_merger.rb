@@ -1,42 +1,6 @@
 require "octokit"
 
 class BulkMerger
-  def self.approve_unreviewed_pull_requests!(list: nil)
-    puts "Searching for PRs containing '#{query_string}'"
-
-    unreviewed_pull_requests = find_pull_requests("review:none #{query_string}")
-
-    if unreviewed_pull_requests.size == 0
-      puts "No unreviewed PRs found!"
-      return
-    end
-
-    puts "Found #{unreviewed_pull_requests.size} unreviewed PRs:\n\n"
-
-    unreviewed_pull_requests.each do |pr|
-      puts "- '#{pr.title}' (#{pr.html_url}) "
-    end
-
-    return if list
-
-    puts "\nHave you reviewed the changes, and you want to approve all these PRs? [y/N]\n"
-    if STDIN.gets.chomp == "y"
-      puts "OK! 👍 Approving away..."
-    else
-      puts "👋"
-      exit 1
-    end
-
-    unreviewed_pull_requests.each do |pr|
-      print "Reviewing PR '#{pr.title}' (#{pr.html_url}) "
-
-      repo = pr.repository_url.gsub("https://api.github.com/repos/", "")
-      client.create_pull_request_review(repo, pr.number, event: "APPROVE")
-
-      puts "✅"
-    end
-  end
-
   def self.merge_approved_pull_requests!
     unmerged_pull_requests = find_pull_requests("review:approved #{query_string}")
 
