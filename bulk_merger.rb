@@ -4,7 +4,7 @@ class BulkMerger
   def self.approve_unreviewed_pull_requests!(list: nil)
     puts "Searching for PRs containing '#{query_string}'"
 
-    unreviewed_pull_requests = find_govuk_pull_requests("review:none #{query_string}")
+    unreviewed_pull_requests = find_pull_requests("review:none #{query_string}")
 
     if unreviewed_pull_requests.size == 0
       puts "No unreviewed PRs found!"
@@ -38,7 +38,7 @@ class BulkMerger
   end
 
   def self.merge_approved_pull_requests!
-    unmerged_pull_requests = find_govuk_pull_requests("review:approved #{query_string}")
+    unmerged_pull_requests = find_pull_requests("review:approved #{query_string}")
 
     if unmerged_pull_requests.size == 0
       puts "No unmerged PRs found!"
@@ -74,19 +74,19 @@ class BulkMerger
   end
 
   def self.search_pull_requests(query)
-    client.search_issues("#{query} archived:false is:pr user:alphagov state:open in:title").items
+    client.search_issues("#{query} archived:false is:pr state:open in:title").items
   end
 
-  def self.govuk_repos
-    @govuk_repos ||= client.search_repos("org:alphagov topic:govuk")
+  def self.repos
+    @repos ||= client.search_repos()
       .items
       .reject!(&:archived)
       .map { |repo| repo.full_name }
   end
 
-  def self.find_govuk_pull_requests(query)
+  def self.find_pull_requests(query)
     search_pull_requests(query).select do |pr|
-      govuk_repos.any? { |repo| pr.repository_url.include?(repo) }
+      repos.any? { |repo| pr.repository_url.include?(repo) }
     end
   end
 
