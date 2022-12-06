@@ -7,6 +7,8 @@ async function run(): Promise<void> {
     const authors = core.getInput('authors');
     const title = core.getInput('title');
 
+    const repoName = core.getState('github.repository');
+
     const kit = gh.getOctokit(token);
 
     const { data: pullRequest } = await kit.rest.pulls.get({
