@@ -13,13 +13,9 @@ async function run(): Promise<void> {
 
     const kit = gh.getOctokit(token);
 
-    const { data: pullRequest } = await kit.rest.pulls.get({
+    const { data: pullRequest } = await kit.rest.pulls.list({
       owner,
       repo,
-      pull_number: 123,
-      mediaType: {
-        format: 'diff',
-      },
     });
   } catch (err) {
     if (err instanceof Error) core.setFailed(err.message);
