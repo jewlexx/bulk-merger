@@ -6,8 +6,7 @@ async function run(): Promise<void> {
     const repo = core.getInput('repo', { required: true });
     const owner = core.getInput('owner', { required: true });
   } catch (err) {
-    core.setFailed(err.message);
-    return;
+    if (err instanceof Error) core.setFailed(err.message);
   }
 }
 
