@@ -13,7 +13,7 @@ async function run(): Promise<void> {
 
     const kit = gh.getOctokit(token);
 
-    const { data: pullRequest } = await kit.rest.pulls.list({
+    const { data: pullRequests } = await kit.rest.pulls.list({
       owner,
       repo,
     });
