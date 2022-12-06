@@ -9,11 +9,13 @@ async function run(): Promise<void> {
 
     const repoName = core.getState('github.repository');
 
+    const [owner, repo] = repoName.split('/');
+
     const kit = gh.getOctokit(token);
 
     const { data: pullRequest } = await kit.rest.pulls.get({
-      owner: 'octokit',
-      repo: 'rest.js',
+      owner,
+      repo,
       pull_number: 123,
       mediaType: {
         format: 'diff',
