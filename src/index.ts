@@ -18,7 +18,8 @@ async function run(): Promise<void> {
       repo,
     });
 
-    pullRequests.forEach((request) => {});
+    for (request of pullRequests) {
+    }
   } catch (err) {
     if (err instanceof Error) core.setFailed(err.message);
   }
