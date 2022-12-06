@@ -16,9 +16,5 @@ inputs:
     default: '.*'
 
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  env:
-    GITHUB_TOKEN: ${{ inputs.repo-token }}
-    AUTHORS: ${{ inputs.authors }}
-    TITLE: ${{ inputs.title }}
+  using: 'node16'
+  main: 'dist/index.js'
