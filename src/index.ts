@@ -8,6 +8,15 @@ async function run(): Promise<void> {
     const title = core.getInput('title');
 
     const kit = gh.getOctokit(token);
+
+    const { data: pullRequest } = await kit.rest.pulls.get({
+      owner: 'octokit',
+      repo: 'rest.js',
+      pull_number: 123,
+      mediaType: {
+        format: 'diff',
+      },
+    });
   } catch (err) {
     if (err instanceof Error) core.setFailed(err.message);
   }
