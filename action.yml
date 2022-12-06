@@ -3,7 +3,7 @@ description: 'Merge pull requests that match given criteria'
 inputs:
   repo-token:
     description: 'The authentication token to use'
-    required: false
+    required: true
     default: ${{ secrets.GITHUB_TOKEN }}
 
   authors:
