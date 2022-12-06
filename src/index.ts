@@ -1,3 +1,3 @@
-async function run() {}
+async function run(): Promise<void> {}
 
 run();
